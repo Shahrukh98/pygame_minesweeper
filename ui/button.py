@@ -17,12 +17,13 @@ class Button(pygame.Rect):
         tag: str = "Default",
         title: str = "Default",
     ):
+        pygame.font.init()
         self.background_color = background_color
         self.text_color = text_color
         self.tag = tag
         self.on_click = on_click
         self.title = title
-        self.font = pygame.font.Font("arialblack", 50)
+        self.font = pygame.font.SysFont("arialunicode", 50)
         super().__init__(left, top, width, height)
 
     def collidepoint(self, mx, my, clicked: bool):

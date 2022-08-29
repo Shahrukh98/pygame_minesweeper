@@ -43,7 +43,7 @@ class MainMenu:
     face2_image = pygame.image.load('assets/face2.png')
     bomb_image = pygame.image.load('assets/minesweep.png')
 
-    main_menu_objects: List[Any] = [
+    main_menu_objects = [
         play_button, options_button,scores_button, quit_button
     ]
 
@@ -53,7 +53,7 @@ class MainMenu:
 
     music_toggle_button = quit_button = Button(on_click = music_toggle,left=75,top=150,title ="Toggle Music")
 
-    options_objects: List[Any] = [
+    options_objects = [
         music_toggle_button
     ]
 
@@ -61,7 +61,7 @@ class MainMenu:
 
     def pass_collision_deets(self,mx,my, clicked, objects):
         for object in objects:
-            if isinstance(object) == Button:
+            if isinstance(object,Button):
                 object.collidepoint(mx,my,clicked) 
 
     def object_draw(self,objects,screen):

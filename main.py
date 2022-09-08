@@ -23,6 +23,9 @@ class Minesweeper:
     click: bool = True
     mouse_coordinates: tuple = (0,0)
 
+    pygame.mixer.init()
+    pygame.mixer.music.load('assets/rituel.mp3')
+    pygame.mixer.music.play(loops=0)
 
     def play_button_func(self):
         pass
@@ -33,13 +36,21 @@ class Minesweeper:
     main_menu = MainMenu(play_function=play_button_func, quit_function=quit_button_func)
 
     def play(self):
-        self.screen.fill((58,78,91))
+        self.screen.fill((60,80,100))
         while self.run:
+            if not self.on_menu and not self.pause:
+                pass
+            
             if self.on_menu:
-                self.main_menu.render(self.screen,self.mouse_coordinates, self.click)
+                status = self.main_menu.render(self.screen, self.mouse_coordinates, self.click)
+                if status == 0:
+                    self.run = False
+                if status == 1:
+                    self.on_menu = False
 
             if self.pause:
                 pass
+            
 
             self.click = False
             for event in pygame.event.get():

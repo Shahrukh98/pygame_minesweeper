@@ -1,4 +1,5 @@
 from __future__ import annotations
+from dataclasses import field
 from types import FunctionType
 from typing import Tuple
 import pygame
@@ -7,15 +8,16 @@ import pygame
 class Button(pygame.Rect):
     def __init__(
         self,
-        on_click: FunctionType,
         left: int,
         top: int,
+        on_click: callable = field(default=None),
         width: int = 200,
         height: int = 80,
         background_color: tuple = (0, 0, 0),
         text_color: tuple = (255, 255, 255),
         tag: str = "Default",
         title: str = "Default",
+
     ):
         pygame.font.init()
         self.background_color = background_color
@@ -26,14 +28,14 @@ class Button(pygame.Rect):
         self.font = pygame.font.SysFont("arialunicode", 50)
         super().__init__(left, top, width, height)
 
-    def collidepoint(self, mx, my, clicked: bool):
+    def collidepoint(self, mx, my, clicked: bool, caller_instance):
         hovered = super().collidepoint(mx, my)
         if hovered:
             self.background_color = (255, 255, 255)
             self.text_color = (0, 0, 0)
-            print(f"{self.title} button hovered!")
+            # print(f"{self.title} button hovered!")
             if clicked:
-                self.on_click()
+                self.on_click(caller_instance)
                 self.background_color = (0, 255, 0)
         else:
             self.text_color = (255, 255, 255)
@@ -47,3 +49,6 @@ class Button(pygame.Rect):
         surface.blit(
             text_img, (self.left + (self.width // 10), self.top + (self.height // 3))
         )
+
+    
+

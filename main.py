@@ -1,56 +1,20 @@
-from dataclasses import dataclass, field
-from enum import Enum
-from time import sleep
-from typing import List
-import pygame
-from constants import WINDOW_HEIGHT, WINDOW_WIDTH
-from main_menu import MainMenu
-from ui.button import Button
+from pygame import init as PyGameInit
+from game_utils import GameStateManager, IoManager, SoundManager, UiManager
 
-pygame.init()
-@dataclass
+
 class Minesweeper:
+    def __init__(self) -> None:
+        PyGameInit()
 
-    # ONLY FOR INITIATION  #
-    pygameee = pygame.init()
-    ########################
-    screen: pygame.Surface = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT))
-    font: pygame.font.Font = pygame.font.SysFont('arialblack',40)
-
-    run: bool = True 
-    on_menu: bool = True
-    pause: bool = False
-    click: bool = True
-    mouse_coordinates: tuple = (0,0)
-
-    pygame.mixer.init()
-    pygame.mixer.music.load('assets/rituel.mp3')
-    pygame.mixer.music.play(loops=0)
-
-    def play_button_func(self):
-        pass
-
-    def quit_button_func(self):
-        self.run = False
-
-    main_menu = MainMenu(play_function=play_button_func, quit_function=quit_button_func)
+        self.game_state_manager: GameStateManager = GameStateManager()
+        self.sound_manager: SoundManager = SoundManager()
+        self.ui_manager: UiManager = UiManager()
+        self.io_manager: IoManager = IoManager()
 
     def play(self):
-        self.screen.fill((60,80,100))
-        while self.run:
-            if not self.on_menu and not self.pause:
-                pass
-            
-            if self.on_menu:
-                status = self.main_menu.render(self.screen, self.mouse_coordinates, self.click)
-                if status == 0:
-                    self.run = False
-                if status == 1:
-                    self.on_menu = False
+        self.screen.fill((60, 80, 100))
 
-            if self.pause:
-                pass
-            
+        while self.game_state_manager.running:
 
             self.click = False
             for event in pygame.event.get():
@@ -62,7 +26,7 @@ class Minesweeper:
                         self.click = True
 
                 if event.type == pygame.MOUSEMOTION:
-                    self.mouse_coordinates = pygame.mouse.get_pos() 
+                    self.mouse_coordinates = pygame.mouse.get_pos()
 
                 if event.type == pygame.QUIT:
                     self.run = False

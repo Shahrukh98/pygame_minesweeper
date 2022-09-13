@@ -36,8 +36,8 @@ class MainMenu:
     def quit_fun(self):
         self.running = 0
  
-    logo1_image = pygame.transform.scale(pygame.image.load('assets/logo1.png'),( 0.6*WINDOW_WIDTH, .9* WINDOW_HEIGHT))
-    logo2_image = pygame.transform.scale(pygame.image.load('assets/logo2.png'),( 0.3*WINDOW_WIDTH, 0.5* WINDOW_HEIGHT))
+    logo1_image = pygame.transform.scale(pygame.transform.chop(pygame.image.load('assets/logo1.png'),(100,100,0,0)),(0.3*WINDOW_WIDTH,0.3*WINDOW_HEIGHT))
+    # logo2_image = pygame.transform.chop(pygame.image.load('assets/logo2.png'),( 0.3*WINDOW_WIDTH, 0.5* WINDOW_HEIGHT))
 
     main_menu_objects = [
      Button(on_click=v['func'],left=BUTTON_LEFT_OFFSET,top=TOP_OFFSET*(k+1),title=v['title'] ) for k,v in enumerate([{
@@ -94,7 +94,9 @@ class MainMenu:
             object.draw(screen)
 
     def print_main_menu_picture(self,screen,mx,my):
-        screen.blit(self.logo1_image,(0*WINDOW_WIDTH,0*WINDOW_HEIGHT))
+        
+        
+        screen.blit(self.logo1_image,(0.3*WINDOW_WIDTH,0.3*WINDOW_HEIGHT))
 
     def render(self,screen, mouse_coordinates,clicked) -> int:
         screen.fill((60,80,100))

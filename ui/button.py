@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import field
 from types import FunctionType
+from constants import WINDOW_HEIGHT,WINDOW_WIDTH
 from typing import Tuple
 import pygame
 
@@ -11,8 +12,8 @@ class Button(pygame.Rect):
         left: int,
         top: int,
         on_click: callable = field(default=None),
-        width: int = 200,
-        height: int = 80,
+        width: int = .1*WINDOW_WIDTH,
+        height: int = .1*WINDOW_HEIGHT,
         background_color: tuple = (0, 0, 0),
         text_color: tuple = (255, 255, 255),
         tag: str = "Default",
